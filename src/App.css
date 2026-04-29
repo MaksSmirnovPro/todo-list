@@ -1,38 +1,266 @@
-.App {
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 28px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  padding: 35px;
+  animation: fadeIn 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 80vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h1 {
+  text-align: center;
+  color: #1a202c;
+  margin-bottom: 10px;
+  font-size: 2.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-icon {
+  font-size: 48px;
+  animation: bounce 2s infinite;
+  -webkit-text-fill-color: initial;
+  color: #667eea;
+}
+
+.subtitle {
+  text-align: center;
+  color: #718096;
+  font-size: 14px;
+  margin-top: -5px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 15px;
+  border-radius: 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2d3748;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #718096;
+  font-weight: 500;
+}
+
+.stat-card.priority-high-stat .stat-value {
+  color: #ff6b6b;
+}
+
+.stat-card.priority-medium-stat .stat-value {
+  color: #ffd93d;
+}
+
+.stat-card.priority-low-stat .stat-value {
+  color: #6bcf7f;
+}
+
+/* Footer Styles */
+.footer {
+  margin-top: 40px;
+  padding-top: 25px;
+  border-top: 2px solid #f0f0f0;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.footer-content {
   display: flex;
   flex-direction: column;
+  gap: 8px;
+}
+
+.developer-info {
+  font-size: 14px;
+  color: #4a5568;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.App-link {
-  color: #61dafb;
+/* Стили для ссылки React */
+.react-link {
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
 }
 
-@keyframes App-logo-spin {
+.react-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, #61dafb 0%, #2c3e50 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.react-link:hover .react-icon {
+  background: linear-gradient(135deg, #61dafb 0%, #61dafb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transform: scale(1.05);
+  background-color: rgba(97, 218, 251, 0.1);
+}
+
+/* Стили для ссылки GitHub */
+.developer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: bold;
+  color: #667eea;
+  text-decoration: none;
+  position: relative;
+  transition: all 0.3s ease;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.github-icon {
+  transition: transform 0.3s ease;
+}
+
+.developer-link:hover {
+  color: #764ba2;
+  background: rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
+}
+
+.developer-link:hover .github-icon {
+  transform: scale(1.1);
+}
+
+.developer-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.developer-link:hover::after {
+  width: 80%;
+}
+
+.copyright {
+  font-size: 12px;
+  color: #a0aec0;
+}
+
+/* Анимации */
+@keyframes fadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(20px);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
   }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Адаптивность */
+@media (max-width: 640px) {
+  .container {
+    padding: 20px;
+    min-height: 90vh;
+  }
+  
+  h1 {
+    font-size: 1.8em;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .developer-info {
+    font-size: 12px;
+  }
+  
+  .copyright {
+    font-size: 10px;
+  }
+  
+  .developer-link,
+  .react-icon {
+    font-size: 12px;
+  }
+}
+
+/* Стили для скроллбара (для красоты) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46a0 100%);
 }
