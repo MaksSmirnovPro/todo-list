@@ -18,7 +18,7 @@
 
 ## 🛠️ Технологии
 
-- React 18
+- React 19
 - CSS3 (Flexbox, Grid, Анимации)
 - LocalStorage API
 - GitHub Pages
