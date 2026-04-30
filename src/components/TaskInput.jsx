@@ -6,6 +6,7 @@ const TaskInput = ({ onAddTask, showNotification }) => {
   const [priority, setPriority] = useState('medium');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
+  const [showDateTime, setShowDateTime] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,8 +22,10 @@ const TaskInput = ({ onAddTask, showNotification }) => {
     }
     
     let createdAt = null;
-    if (date) {
-      createdAt = new Date(`${date}T${time || '12:00'}`).toISOString();
+    if (date && time) {
+      createdAt = new Date(`${date}T${time}`).toISOString();
+    } else if (date) {
+      createdAt = new Date(`${date}T12:00`).toISOString();
     }
     
     onAddTask(text.trim(), priority, createdAt);
@@ -30,7 +33,11 @@ const TaskInput = ({ onAddTask, showNotification }) => {
     setPriority('medium');
     setDate('');
     setTime('');
+    setShowDateTime(false);
   };
+
+  // Получаем сегодняшнюю дату в формате YYYY-MM-DD для атрибута min
+  const today = new Date().toISOString().split('T')[0];
 
   return (
     <form className="input-section" onSubmit={handleSubmit}>
@@ -56,21 +63,13 @@ const TaskInput = ({ onAddTask, showNotification }) => {
           <option value="high">🔴 Высокий приоритет</option>
         </select>
         
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          className="date-input"
-          placeholder="Дата"
-        />
-        
-        <input
-          type="time"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-          className="time-input"
-          placeholder="Время"
-        />
+        <button 
+          type="button"
+          onClick={() => setShowDateTime(!showDateTime)}
+          className="datetime-toggle-btn"
+        >
+          📅 {showDateTime ? 'Скрыть дату' : 'Добавить дату'}
+        </button>
         
         <button type="submit" className="add-btn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -79,6 +78,27 @@ const TaskInput = ({ onAddTask, showNotification }) => {
           Добавить
         </button>
       </div>
+      
+      {showDateTime && (
+        <div className="datetime-row">
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="date-input"
+            min={today}
+            pattern="\d{4}-\d{2}-\d{2}"
+          />
+          
+          <input
+            type="time"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+            className="time-input"
+            step="60"
+          />
+        </div>
+      )}
     </form>
   );
 };

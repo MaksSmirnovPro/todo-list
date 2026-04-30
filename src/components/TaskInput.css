@@ -58,6 +58,153 @@
   outline: none;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
+.input-section {
+  background: linear-gradient(135deg, #f5f7fa 0%, #f3f4f6 100%);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.task-input {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.task-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  outline: none;
+}
+
+.input-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.priority-select,
+.datetime-toggle-btn {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.datetime-toggle-btn {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.datetime-toggle-btn:hover {
+  border-color: #667eea;
+  background: #f8fafc;
+}
+
+.priority-select:hover,
+.date-input:hover,
+.time-input:hover {
+  border-color: #cbd5e1;
+}
+
+.priority-select:focus,
+.date-input:focus,
+.time-input:focus {
+  border-color: #667eea;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.datetime-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 15px;
+  animation: slideDown 0.3s ease;
+}
+
+.date-input,
+.time-input {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 640px) {
+  .input-row {
+    flex-direction: column;
+  }
+  
+  .datetime-row {
+    flex-direction: column;
+  }
+  
+  .add-btn {
+    justify-content: center;
+  }
+  
+  .priority-select,
+  .datetime-toggle-btn,
+  .date-input,
+  .time-input {
+    width: 100%;
+  }
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+.add-btn:active {
+  transform: translateY(0);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 .add-btn {
   display: flex;
