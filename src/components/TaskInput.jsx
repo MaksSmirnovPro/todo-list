@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './TaskInput.css';
 
-const TaskInput = ({ onAddTask }) => {
+const TaskInput = ({ onAddTask, showNotification }) => {
   const [text, setText] = useState('');
   const [priority, setPriority] = useState('medium');
   const [date, setDate] = useState('');
@@ -9,12 +9,14 @@ const TaskInput = ({ onAddTask }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     if (!text.trim()) {
-      alert('Пожалуйста, введите задачу!');
+      showNotification('⚠️ Пожалуйста, введите текст задачи!', 'warning', 1500);
       return;
     }
+    
     if (text.length > 100) {
-      alert('Задача не может превышать 100 символов!');
+      showNotification('❌ Задача не может превышать 100 символов!', 'error', 1500);
       return;
     }
     

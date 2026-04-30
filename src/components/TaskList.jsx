@@ -2,7 +2,7 @@ import React from 'react';
 import TaskItem from './TaskItem';
 import './TaskList.css';
 
-const TaskList = ({ tasks, onToggle, onDelete, onEdit }) => {
+const TaskList = ({ tasks, onToggle, onDelete, onEdit, showNotification }) => {
   if (tasks.length === 0) {
     return <div className="empty-state">Нет задач для отображения</div>;
   }
@@ -16,6 +16,7 @@ const TaskList = ({ tasks, onToggle, onDelete, onEdit }) => {
           onToggle={onToggle}
           onDelete={onDelete}
           onEdit={onEdit}
+          showNotification={showNotification}
         />
       ))}
     </ul>

@@ -196,6 +196,47 @@ h1 {
   color: #a0aec0;
 }
 
+.modal-hint {
+  margin-top: 12px;
+  /* padding: 8px 12px; */
+  background: #f0fdf4;
+  border-radius: 8px;
+  color: #166534;
+  font-size: 12px;
+  text-align: center;
+  /* border-left: 3px solid #22c55e; */
+  animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 10px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: #764ba2;
+}
+
 /* Анимации */
 @keyframes fadeIn {
   from {

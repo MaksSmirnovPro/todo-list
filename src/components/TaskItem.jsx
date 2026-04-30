@@ -1,56 +1,54 @@
 import React, { useState } from 'react';
+import EditModal from './EditModal';
+import ConfirmModal from './ConfirmModal';
 import { getPriorityText, getPriorityIcon } from '../utils/helpers';
 import './TaskItem.css';
 
-const TaskItem = ({ task, onToggle, onDelete, onEdit }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editText, setEditText] = useState(task.text);
+const formatDate = (createdAt) => {
+  if (!createdAt) return null;
+  
+  const date = new Date(createdAt);
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+  
+  const time = date.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+  
+  if (date.toDateString() === today.toDateString()) {
+    return `Сегодня в ${time}`;
+  } else if (date.toDateString() === yesterday.toDateString()) {
+    return `Вчера в ${time}`;
+  } else {
+    return `${date.toLocaleDateString('ru-RU')} в ${time}`;
+  }
+};
 
-  const handleSaveEdit = () => {
-    if (!editText.trim()) {
-      alert('Текст задачи не может быть пустым!');
-      return;
-    }
-    if (editText.length > 100) {
-      alert('Задача не может превышать 100 символов!');
-      return;
-    }
-    onEdit(task.id, editText.trim());
-    setIsEditing(false);
+const TaskItem = ({ task, onToggle, onDelete, onEdit, showNotification }) => {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const handleEdit = (newText) => {
+    onEdit(task.id, newText);
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') handleSaveEdit();
-    if (e.key === 'Escape') {
-      setIsEditing(false);
-      setEditText(task.text);
-    }
+  const handleDelete = () => {
+    onDelete(task.id);
+    setIsDeleteModalOpen(false);
   };
+
+  const formattedDate = formatDate(task.createdAt);
 
   return (
-    <li className={`todo-item priority-${task.priority} ${task.completed ? 'completed-item' : ''}`}>
-      <div className="todo-left">
-        <input
-          type="checkbox"
-          checked={task.completed}
-          onChange={() => onToggle(task.id)}
-          className="todo-checkbox"
-        />
-        
-        {isEditing ? (
-          <div className="edit-container">
-            <input
-              type="text"
-              value={editText}
-              onChange={(e) => setEditText(e.target.value)}
-              onKeyDown={handleKeyPress}
-              className="edit-input"
-              autoFocus
-              maxLength="100"
-            />
-            <button onClick={handleSaveEdit} className="save-btn">💾 Сохранить</button>
-          </div>
-        ) : (
+    <>
+      <li className={`todo-item priority-${task.priority} ${task.completed ? 'completed-item' : ''}`}>
+        <div className="todo-left">
+          <input
+            type="checkbox"
+            checked={task.completed}
+            onChange={() => onToggle(task.id)}
+            className="todo-checkbox"
+          />
+          
           <div className="todo-content">
             <span className={`todo-text ${task.completed ? 'completed' : ''}`}>
               {task.text}
@@ -59,27 +57,44 @@ const TaskItem = ({ task, onToggle, onDelete, onEdit }) => {
               <span className={`priority-badge priority-${task.priority}`}>
                 {getPriorityIcon(task.priority)} {getPriorityText(task.priority)}
               </span>
-              {task.createdAt && (
+              {formattedDate && (
                 <span className="date-badge">
-                  📅 {task.getFormattedDate()}
+                  📅 {formattedDate}
                 </span>
               )}
             </div>
           </div>
-        )}
-      </div>
-      
-      <div className="todo-actions">
-        {!isEditing && (
-          <button onClick={() => setIsEditing(true)} className="edit-btn" title="Редактировать">
+        </div>
+        
+        <div className="todo-actions">
+          <button onClick={() => setIsEditModalOpen(true)} className="edit-btn" title="Редактировать">
             ✏️
           </button>
-        )}
-        <button onClick={() => onDelete(task.id)} className="delete-btn" title="Удалить">
-          🗑️
-        </button>
-      </div>
-    </li>
+          <button onClick={() => setIsDeleteModalOpen(true)} className="delete-btn" title="Удалить">
+            🗑️
+          </button>
+        </div>
+      </li>
+      
+      {isEditModalOpen && (
+        <EditModal
+          task={task}
+          onSave={handleEdit}
+          onClose={() => setIsEditModalOpen(false)}
+          showNotification={showNotification}
+        />
+      )}
+
+      <ConfirmModal
+        isOpen={isDeleteModalOpen}
+        onConfirm={handleDelete}
+        onCancel={() => setIsDeleteModalOpen(false)}
+        title="Удаление задачи"
+        message={`Вы уверены, что хотите удалить задачу "${task.text}"? Это действие нельзя отменить.`}
+        confirmText="Удалить"
+        cancelText="Отмена"
+      />
+    </>
   );
 };
 
